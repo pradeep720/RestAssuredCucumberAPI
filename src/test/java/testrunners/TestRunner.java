@@ -6,9 +6,9 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = "src/test/resources/features/Example.feature",
+    features = "C:\\Users\\pradeep.s\\eclipse-workspace\\cucumber\\src\\test\\resources\\features\\Example.feature",
     glue = {"stepdefinations"},
-    plugin = {"pretty", "html:target/cucumber-report/cucumber-reports.html", "json:target/cucumber-report/Cucumber.json","rerun:target/rerun.txt" },
+    plugin = {"pretty", "html:target/cucumber-reports.html"},
     monochrome = true
 
 )

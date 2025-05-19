@@ -8,14 +8,25 @@ import io.restassured.response.Response;
 
 import static org.hamcrest.Matchers.equalTo;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 
 public class ApiSteps {
     private Response response;
+    
+    Properties prop = new Properties();
+   
 
-    @Given("I set the base URI to {string}")
-    public void setBaseUri(String baseUri) {
-        RestAssured.baseURI = baseUri;
+    
+    @Given("I set the base URL")
+    public void setBaseUri() throws IOException {
+        FileInputStream fis = new FileInputStream("src/test/resources/data.properties");
+        prop.load(fis);
+        RestAssured.baseURI = prop.getProperty("URL");
     }
+
 
     @When("I send a GET request to {string}")
     public void sendGetRequest(String endpoint) {
