@@ -60,7 +60,8 @@ stages:
                 publishLocation: 'Container'
             - task: NodeTool@0
               inputs:
-                versionSource: 'fromFile'
+                versionSource: 'spec'
+                versionSpec: '18.x'
                 checkLatest: true
             - task: PublishCucumberReport@1
               inputs:
