@@ -1,0 +1,73 @@
+trigger: 
+   branches:
+      include:
+          - none
+      exclude:
+          - none 
+pr:
+    branches:
+     include:
+         - none
+     exclude:
+         - none 
+      
+schedules:
+    - cron: "0 17 * * 2,5"
+      displayName: 
+      branches:
+       include:
+           - develop
+
+stages:
+    - stage: Test
+      displayName: Test Stage
+      jobs:
+        - job: runAutomationTest
+          timeoutInMinutes: 600
+          displayName: RunAutomationTest
+          pool: 
+           vmImage: 'windows-latest'
+          steps:
+            # - script: echo "Running tests..."
+            - task: JavaToolInstaller@1
+              inputs:
+                versionSpec: '8'
+                jdkArchitectureOption: 'x64'
+                jdkSourceOption: 'PreInstalled'
+            - task: replacetokens@6
+              inputs:
+                root: 'src/test/resources'
+                sources: 'data.properties'
+            - task: Maven@4
+              inputs:
+                mavenPomFile: 'pom.xml'
+                publishJUnitResults: true
+                testResultsFiles: '**/surefire-reports/TEST-*.xml'
+                javaHomeOption: 'JDKVersion'
+                mavenVersionOption: 'Default'
+                mavenAuthenticateFeed: false
+                effectivePomSkip: false
+                sonarQubeRunAnalysis: false     
+            - task: CopyFiles@2
+              inputs:
+                SourceFolder: '$(Build.SourcesDirectory)'
+                Contents: '**'
+                TargetFolder: '$(Build.ArtifactStagingDirectory)'
+            - task: PublishBuildArtifacts@1
+              inputs:
+                PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+                ArtifactName: 'drop'
+                publishLocation: 'Container'
+            - task: NodeTool@0
+              inputs:
+                versionSource: 'fromFile'
+                checkLatest: true
+            - task: PublishCucumberReport@1
+              inputs:
+                jsonDir: '$(Build.ArtifactStagingDirectory)'
+                outputPath: '$(System.DefaultWorkingDirectory)'
+                theme: 'bootstrap'
+                reportSuiteAsScenarios: true
+             
+
+
