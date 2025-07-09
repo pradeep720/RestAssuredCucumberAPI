@@ -47,10 +47,9 @@ stages:
               inputs:
                 secureFile: 'settings.xml'
 
-            - task: PowerShell@2
-              inputs:
-                targetType: 'inline'
-                script: 'mvn deploy --settings $(fetchSettings.secureFilePath)'
+            - script: |
+                mvn deploy --settings $(fetchSettings.secureFilePath)
+                displayName: 'Deploy using settings.xml'
 
             - task: Maven@4
               inputs:
