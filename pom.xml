@@ -72,4 +72,17 @@
             </snapshots>
         </repository>
     </repositories>	
+   <distributionManagement>
+	<repository>
+            <id>Java-jar</id>
+            <url>https://pkgs.dev.azure.com/pradeepselventhirannew/CPTDevOps/_packaging/Java-jar/maven/v1</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+   <distributionManagement>
+	   
 </project>
