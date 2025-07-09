@@ -48,7 +48,7 @@ stages:
                 secureFile: 'settings.xml'
 
             - script: |
-                mvn deploy --settings $(fetchSettings.secureFilePath)
+                mvn deploy --settings $(Agent.TempDirectory)/settings.xml
                 displayName: 'Deploy using settings.xml'
 
             - task: Maven@4
