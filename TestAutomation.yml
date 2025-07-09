@@ -38,6 +38,11 @@ stages:
               inputs:
                 root: 'src/test/resources'
                 sources: 'data.properties'
+            
+            - task: MavenAuthenticate@0
+              inputs:
+                artifactsFeeds: 'Java-jar'
+
             - task: Maven@4
               inputs:
                 mavenPomFile: 'pom.xml'
