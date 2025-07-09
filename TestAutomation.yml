@@ -42,6 +42,14 @@ stages:
             - task: MavenAuthenticate@0
               inputs:
                 artifactsFeeds: 'Java-jar'
+            
+            - task: DownloadSecureFile@1
+              inputs:
+                secureFile: 'settings.xml'
+
+            - task: CmdLine@2
+              inputs:
+                script: 'mvn deploy --settings $(fetchSettings.secureFilePath)'
 
             - task: Maven@4
               inputs:
