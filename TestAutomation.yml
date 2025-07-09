@@ -48,8 +48,16 @@ stages:
                 secureFile: 'settings.xml'
 
             - script: |
-                mvn deploy --settings $(Agent.TempDirectory)/settings.xml
-                displayName: 'Deploy using settings.xml'
+                mkdir -p ~/.m2
+                cp "$(Agent.TempDirectory)/settings.xml" ~/.m2/settings.xml
+                echo "Custom settings.xml copied to ~/.m2"
+              displayName: 'Configure Maven settings.xml'
+
+            # Now run Maven deploy (no need to specify --settings, Maven will pick ~/.m2/settings.xml)
+            - script: |
+                mvn deploy
+              displayName: 'Maven Deploy'
+    
 
             - task: Maven@4
               inputs:
